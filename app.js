@@ -204,9 +204,9 @@ document.addEventListener(
 
 /* ---------- Reward Popup ---------- */
 const REWARD_MAP = {
-  memory: "PUTWORDHERECODE1",
-  hearts: "PUTWORDHERECODE2",
-  quiz: "PUTWORDHERECODE3",
+  memory: "SERENDIPITOUS",
+  hearts: "ARDOR",
+  quiz: "TELEIOS",
 };
 
 function showReward(word) {
@@ -415,3 +415,4 @@ async function loadGame(key) {
 // init
 renderHome();
 burst(18);
+
