@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Happy New Year, Miji! 💖</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- floating hearts background -->
+  <div class="hearts" id="hearts"></div>
+
+  <!-- flash overlay for dramatic unlock -->
+  <div class="unlock-flash" id="unlockFlash" aria-hidden="true"></div>
+
+  <!-- Music Toggle -->
+  <button id="musicToggle" class="music-toggle" aria-label="Toggle music" title="Toggle music">
+    🔊
+  </button>
+
+  <!-- Background Music -->
+  <audio id="bgMusic" loop>
+    <source src="assets/background.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Reward Popup (Gift) -->
+  <div class="modal" id="rewardModal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="gift-icon" aria-hidden="true">🎁</div>
+      <div class="modal-title">Reward Unlocked!</div>
+      <div class="modal-word" id="rewardWord">PUTWORDHERECODEX</div>
+      <div class="modal-sub">Claimed for Miji 💖</div>
+
+      <div class="row" style="justify-content:center; margin-top:12px;">
+        <button id="closeReward">Back to Home</button>
+      </div>
+    </div>
+  </div>
+
+  <header class="top">
+    <h1>Happy New Year, My Baby! 💖✨</h1>
+    <p>Play the games, collect the rewards, then unlock the letter. (Romantic, noh? Heh.)</p>
+  </header>
+
+  <main class="panel">
+    <section id="gameRoot" class="game"></section>
+  </main>
+
+  <footer class="foot">
+    <small>Made for Miarie Jinnae Bernabe Reyes with love, and too many hearts. 💗</small>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

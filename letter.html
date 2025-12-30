@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Eto na yung letter boiiii!! 💌</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="letter-page">
+  <div class="hearts" id="hearts"></div>
+  <div class="sparkles" aria-hidden="true"></div>
+
+  <!-- Music Toggle (same as index) -->
+  <button id="musicToggle" class="music-toggle" aria-label="Toggle music" title="Toggle music">
+    🔊
+  </button>
+
+  <!-- Background Music (same file) -->
+  <audio id="bgMusic" loop>
+    <source src="assets/background.mp3" type="audio/mpeg">
+  </audio>
+
+  <header class="top">
+    <h1>For My Dearest, Mia. 💌✨</h1>
+    <p>Excited? Read this out loud pls!</p>
+  </header>
+
+  <main class="panel">
+    <section class="game letter-card">
+      <div>
+        <div class="badge">NEW YEAR LETTER</div>
+        <h2 style="margin:6px 0 0;">Dear Miji,</h2>
+        <p class="muted" style="margin-top:8px;">(Replace the text below with your letter.)</p>
+      </div>
+
+      <div class="letter-body">
+        <p class="letter-text">PUTYOURLETTERHERE</p>
+      </div>
+
+      <div class="row" style="margin-top:14px; justify-content:space-between;">
+        <a class="btn-link" href="index.html">← Back to Home</a>
+        <span class="muted">Tip: Keep it real. Cheesy is allowed.</span>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <small>Happy New Year, Miji. Always. 💗</small>
+  </footer>
+
+  <script type="module">
+    // simple heart float for letter page
+    const heartsLayer = document.getElementById("hearts");
+    function spawnHeart() {
+      const el = document.createElement("div");
+      el.className = "heart";
+      const roll = Math.random();
+      el.textContent = roll < 0.18 ? "🎆" : (roll < 0.42 ? "✨" : (roll < 0.75 ? "💖" : "💗"));
+      el.style.left = Math.random() * 100 + "vw";
+      el.style.setProperty("--drift", (Math.random() * 140 - 70) + "px");
+      const dur = 5 + Math.random() * 6;
+      el.style.animationDuration = dur + "s";
+      el.style.fontSize = (16 + Math.random() * 24) + "px";
+      heartsLayer.appendChild(el);
+      setTimeout(() => el.remove(), (dur + 0.5) * 1000);
+    }
+    setInterval(spawnHeart, 170);
+    for (let i=0;i<30;i++) setTimeout(spawnHeart, i*35);
+
+    // music toggle (letter page standalone)
+    const bgMusic = document.getElementById("bgMusic");
+    const musicToggle = document.getElementById("musicToggle");
+    const MUSIC_KEY = "miji_music_enabled_v1";
+    const BASE_VOL = 0.35;
+
+    function fadeTo(target, ms = 450) {
+      if (!bgMusic) return;
+      const start = bgMusic.volume ?? BASE_VOL;
+      const t0 = performance.now();
+      function step(t) {
+        const p = Math.min(1, (t - t0) / ms);
+        bgMusic.volume = start + (target - start) * p;
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    function setIcon() {
+      const enabled = localStorage.getItem(MUSIC_KEY) !== "0";
+      musicToggle.textContent = enabled ? "🔊" : "🔇";
+    }
+
+    async function startIfEnabled() {
+      const enabled = localStorage.getItem(MUSIC_KEY) !== "0";
+      setIcon();
+      if (!enabled) return;
+
+      bgMusic.volume = 0;
+      try {
+        await bgMusic.play();
+        fadeTo(BASE_VOL, 600);
+      } catch {
+        // blocked until user interaction
+      }
+    }
+
+    musicToggle.addEventListener("click", async () => {
+      const enabled = localStorage.getItem(MUSIC_KEY) !== "0";
+      if (enabled) {
+        localStorage.setItem(MUSIC_KEY, "0");
+        fadeTo(0, 350);
+        setTimeout(() => bgMusic.pause(), 360);
+      } else {
+        localStorage.setItem(MUSIC_KEY, "1");
+        try {
+          bgMusic.volume = 0;
+          await bgMusic.play();
+          fadeTo(BASE_VOL, 600);
+        } catch {}
+      }
+      setIcon();
+    });
+
+    // start music after first click anywhere
+    document.addEventListener("click", () => startIfEnabled(), { once: true });
+    setIcon();
+  </script>
+</body>
+</html>
